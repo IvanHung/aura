@@ -376,7 +376,7 @@ namespace Aura.Mabi.Const
 		/// <summary>
 		/// All available options.
 		/// </summary>
-		All = 0xFFFFFFFF,
+		All = 0x7FFFFFFF,
 	}
 
 	public static class ItemActionExtensions
