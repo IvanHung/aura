@@ -379,6 +379,32 @@ namespace Aura.Mabi.Const
 		All = 0xFFFFFFFF,
 	}
 
+	public static class ItemActionExtensions
+	{
+		public static ItemPermissions GetPermissions(this ItemAction action)
+		{
+			switch (action)
+			{
+				default:
+				case ItemAction.NormalItem: return (ItemPermissions.All);
+				case ItemAction.StaticItem: return (ItemPermissions.PersonalShopSellable | ItemPermissions.Tradable | ItemPermissions.Droppable | ItemPermissions.PetStorable | ItemPermissions.BankStorable | ItemPermissions.BankStorableOnOthers);
+				case ItemAction.ImportantItem: return (ItemPermissions.None);
+				case ItemAction.AccountPersonalItem: return (ItemPermissions.Droppable | ItemPermissions.BankStorable | ItemPermissions.BankStorableOnOthers);
+				case ItemAction.DungeonItem: return (ItemPermissions.Tradable | ItemPermissions.Droppable | ItemPermissions.LootableByOthers);
+				case ItemAction.CharacterPersonalItem: return (ItemPermissions.Droppable | ItemPermissions.BankStorable);
+				case ItemAction.RegionFixedItem: return (ItemPermissions.Droppable);
+				case ItemAction.BankBlockedItem: return (ItemPermissions.All & ~ItemPermissions.BankStorable & ~ItemPermissions.BankStorableOnOthers);
+				case ItemAction.NewBagItem: return (ItemPermissions.None);
+				case ItemAction.BankBlockedCharacterPersonalItem: return (ItemPermissions.Sellable | ItemPermissions.Droppable);
+				case ItemAction.GuildItem: return (ItemPermissions.BankStorable);
+				case ItemAction.NotDealItem: return (ItemPermissions.Droppable | ItemPermissions.PetStorable | ItemPermissions.BankStorable | ItemPermissions.BankStorableOnOthers);
+				case ItemAction.Important2Item: return (ItemPermissions.BankStorable);
+				case ItemAction.TradeLimitItem: return (ItemPermissions.PersonalShopSellable | ItemPermissions.Tradable | ItemPermissions.Droppable | ItemPermissions.BankStorable | ItemPermissions.BankStorableOnOthers);
+				case ItemAction.LordKeyItem: return (ItemPermissions.Droppable);
+			}
+		}
+	}
+
 	public enum EgoRace : byte
 	{
 		None = 0,
