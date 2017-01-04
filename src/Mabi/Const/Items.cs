@@ -182,6 +182,27 @@ namespace Aura.Mabi.Const
 	/// </summary>
 	/// <remarks>
 	/// Attr_ActionFlag in item db.
+	/// 
+	/// https://github.com/aura-project/aura/issues/477#issuecomment-266930901
+	/// action \ movement restriction, X means yes.
+	///   |A|B|C|D|E|F|G|H|  A - NPC sellable?
+	///  0|X|X|X|X|X|X|X|X|  B - Personal shop sellable?
+	///  1| |X|X|X| |X|X|X|  C - Tradable?
+	///  2| | | | > | | > |  D - Droppable?
+	///  3| | | |X| | |X|X|  E - Can be picked up by others?
+	///  4| | |X|X|X| | > |  F - Pet storable?
+	///  5| | | |X| | |X| |  G - Bank storable?
+	///  6|?| | |X|?| |?|?|  H - Transferrable to other characters through bank?
+	///  7|      ???      |  
+	///  8| | | | | | | | |  Rentals (1g repairs) and Valentines items?
+	///  9|X| | |X| | | > |
+	/// 10| |?| | > | |X| |  Guild Robe
+	/// 12| | | |X| |X|X|X|
+	/// 13| | | | > | |X| |
+	/// 14| |X|X|X| | |X|X|  *action:14 items can be traded ONCE.
+	/// 16|?|?| |X| |?|?|?|  Unobtainable event items?
+	/// 
+	/// *At the current moment, there is no action:{11,15}
 	/// </remarks>
 	public enum ItemAction
 	{
@@ -299,6 +320,63 @@ namespace Aura.Mabi.Const
 		/// ?
 		/// </summary>
 		LordKeyItem = 16,
+	}
+
+	/// <summary>
+	/// Things that can be done with items (or not).
+	/// </summary>
+	[Flags]
+	public enum ItemPermissions
+	{
+		/// <summary>
+		/// No options.
+		/// </summary>
+		None = 0x00,
+
+		/// <summary>
+		/// Can be sold to NPCs.
+		/// </summary>
+		Sellable = 0x01,
+
+		/// <summary>
+		/// Can be sold in personal shops.
+		/// </summary>
+		PersonalShopSellable = 0x02,
+
+		/// <summary>
+		/// Can be traded.
+		/// </summary>
+		Tradable = 0x04,
+
+		/// <summary>
+		/// Can be dropped.
+		/// </summary>
+		Droppable = 0x08,
+
+		/// <summary>
+		/// Can be picked up by someone other than the owner.
+		/// </summary>
+		LootableByOthers = 0x10,
+
+		/// <summary>
+		/// Can be put in a pet's inventory.
+		/// </summary>
+		PetStorable = 0x20,
+
+		/// <summary>
+		/// Can be put into the bank.
+		/// </summary>
+		BankStorable = 0x40,
+
+		/// <summary>
+		/// Can be put into the bank, in a tab that's not the owner's.
+		/// </summary>
+		BankStorableOnOthers = 0x80,
+
+		/// <summary>
+		/// All available options.
+		/// </summary>
+		All = 0xFFFFFFFF,
 	}
 
 	public enum EgoRace : byte
