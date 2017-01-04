@@ -876,6 +876,16 @@ namespace Aura.Channel.World.Entities
 		}
 
 		/// <summary>
+		/// Returns true if item has the given permission.
+		/// </summary>
+		/// <param name="permission"></param>
+		/// <returns></returns>
+		public bool Is(ItemPermissions permission)
+		{
+			return (this.Data.Permissions & permission) != 0;
+		}
+
+		/// <summary>
 		/// Returns a random drop from the given list as item.
 		/// </summary>
 		/// <param name="rnd"></param>
@@ -1027,9 +1037,7 @@ namespace Aura.Channel.World.Entities
 				this.OwnerId = owner.EntityId;
 
 				// Personal items can never be picked up by anyone else
-				var isPersonal =
-					(this.Data.Action == ItemAction.StaticItem || this.Data.Action == ItemAction.AccountPersonalItem || this.Data.Action == ItemAction.CharacterPersonalItem)
-					|| this.Is(ItemFlags.Personalized);
+				var isPersonal = (this.Is(ItemFlags.Personalized) || !this.Is(ItemPermissions.LootableByOthers));
 
 				// Set protection if item wasn't dropped by a player
 				// and it's not a dungeon room key
