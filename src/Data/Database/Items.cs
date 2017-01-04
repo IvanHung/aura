@@ -21,6 +21,7 @@ namespace Aura.Data.Database
 
 		public ItemType Type { get; set; }
 		public ItemAction Action { get; set; }
+		public ItemPermissions Permissions { get; set; }
 
 		/// <summary>
 		/// Specifies whether an item is consumed upon use.
@@ -168,6 +169,8 @@ namespace Aura.Data.Database
 			info.Action = (ItemAction)entry.ReadInt("action");
 			info.StackType = (StackType)entry.ReadInt("stackType");
 			info.StackMax = entry.ReadUShort("stackMax", 1);
+
+			info.Permissions = info.Action.GetPermissions();
 
 			if (info.StackMax < 1)
 				info.StackMax = 1;
